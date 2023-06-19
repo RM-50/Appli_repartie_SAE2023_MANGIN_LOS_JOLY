@@ -25,10 +25,9 @@ public class EtablissementsEnsSup implements ServiceEnsSup{
                 .uri(URI.create("https://www.data.gouv.fr/fr/datasets/r/5fb6d2e3-609c-481d-9104-350e9ca134fa"))
                 .build();
         HttpResponse<String> response = null;
-        JSONObject etablissements = null;
+        JSONObject etablissements = new JSONObject();
         try {
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            etablissements = new JSONObject();
             etablissements.put("code", response.statusCode());
             etablissements.put("content-type", response.headers().allValues("content-type"));
             JSONArray etablissementsTous = new JSONArray(response.body());
