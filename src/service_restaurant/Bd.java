@@ -1,23 +1,20 @@
 package service_restaurant;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Bd {
 
-    public ResultSet getCoordonnees(String login, String pwd) throws SQLException {
-        String url = "jdbc:oracle:thin:@charlemagne.iutnc.univ-lorraine.fr:1521:infodb";
-        Connection connection = DriverManager.getConnection(url, login, pwd);
+    public static ResultSet getCoordonnees(String login, String pwd) throws SQLException {
+        Connection connection = ConnectionBd.getInstance(login, pwd);
         java.sql.Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT nom-resto, coordonees FROM RESTAURANT");
+        ResultSet resultSet = statement.executeQuery("SELECT nom_resto, coordonees FROM RESTAURANT");
         return resultSet;
     }
 
-    public void reserver(String nom, String prenom, int nb_convives, String tel, String resto, String login, String pwd) throws SQLException {
-        String url = "jdbc:oracle:thin:@charlemagne.iutnc.univ-lorraine.fr:1521:infodb";
-        Connection connection = DriverManager.getConnection(url, login, pwd);
+    public static void reserver(String nom, String prenom, int nb_convives, String tel, String resto, String login, String pwd) throws SQLException {
+        Connection connection = ConnectionBd.getInstance(login, pwd);
         java.sql.Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("SELECT nom FROM CLIENT WHERE nom = '" + nom + "' AND prenom = '" + prenom + "'");
         if (!resultSet.next()) {
