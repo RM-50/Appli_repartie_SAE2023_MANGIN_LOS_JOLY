@@ -1,6 +1,7 @@
 package service_restaurant;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.rmi.RemoteException;
 import java.sql.ResultSet;
@@ -20,14 +21,22 @@ public class Restaurant implements ServiceRestaurant{
 
     // utilise la methode getCoordonnees de la classe Bd
     @Override
-    public JSONArray getRestos() throws RemoteException, SQLException {
-        ResultSet coordonnes  = getCoordonnees(login, password);
-        JSONArray jsonArray = new JSONArray();
-        while (coordonnes.next()){
-            jsonArray.put(coordonnes.getString("nom_resto"));
-            jsonArray.put(coordonnes.getString("coordonees"));
+    public JSONArray getRestos() throws RemoteException{
+        try {
+
+            ResultSet coordonnes = getCoordonnees(login, password);
+            JSONArray jsonArray = new JSONArray();
+            while (coordonnes.next()) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("nom_resto", coordonnes.getString("nom_resto"));
+                jsonObject.put("coordonees", coordonnes.getString("coordonees"));
+                jsonArray.put(jsonObject);
+            }
+            return jsonArray;
+        }catch (SQLException e){
+            System.out.println("Erreur lors de la récupération des coordonnées des restaurants");
+            return null;
         }
-        return jsonArray;
     }
 
     @Override
