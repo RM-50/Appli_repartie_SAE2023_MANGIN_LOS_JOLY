@@ -21,7 +21,7 @@ public class Restaurant implements ServiceRestaurant{
 
     // utilise la methode getCoordonnees de la classe Bd
     @Override
-    public JSONArray getRestos() throws RemoteException{
+    public String getRestos() throws RemoteException{
         try {
 
             ResultSet coordonnes = getCoordonnees(login, password);
@@ -29,11 +29,12 @@ public class Restaurant implements ServiceRestaurant{
             while (coordonnes.next()) {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("nom_resto", coordonnes.getString("nom_resto"));
-                jsonObject.put("coordonees", coordonnes.getString("coordonees"));
+                jsonObject.put("coordonnees_resto", coordonnes.getString("coordonnees_resto"));
                 jsonArray.put(jsonObject);
             }
-            return jsonArray;
+            return jsonArray.toString(2);
         }catch (SQLException e){
+            e.printStackTrace();
             System.out.println("Erreur lors de la récupération des coordonnées des restaurants");
             return null;
         }

@@ -6,7 +6,7 @@ public class MainTest {
     public static void main(String[] args) {
         EtablissementsEnsSup e = new EtablissementsEnsSup();
         try {
-            System.out.println(e.getEtablissements().toString(2));
+            System.out.println(e.getEtablissements());
         } catch (RemoteException ex) {
             System.out.println("Erreur lors de l'utilisation du service ens sup");
         }

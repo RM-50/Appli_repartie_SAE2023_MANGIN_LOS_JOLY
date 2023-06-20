@@ -1,8 +1,6 @@
 package service_restaurant;
 
-import service_central.ServiceCentral;
-import service_ens_sup.EtablissementsEnsSup;
-import service_ens_sup.ServiceEnsSup;
+import proxy.ServiceProxy;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -39,7 +37,7 @@ public class LancerServiceRestaurant {
 
                     // Récupération du service
                     try {
-                        ServiceCentral serviceCentral = (ServiceCentral) reg.lookup("serviceCentral");
+                        ServiceProxy serviceCentral = (ServiceProxy) reg.lookup("serviceCentral");
 
                         // Enregistrement de la référence sur le service central
                         try {

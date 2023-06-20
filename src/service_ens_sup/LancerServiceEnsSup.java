@@ -1,6 +1,6 @@
 package service_ens_sup;
 
-import service_central.ServiceCentral;
+import proxy.ServiceProxy;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -37,7 +37,7 @@ public class LancerServiceEnsSup {
 
                     // Récupération du service
                     try {
-                        ServiceCentral serviceCentral = (ServiceCentral) reg.lookup("serviceCentral");
+                        ServiceProxy serviceCentral = (ServiceProxy) reg.lookup("serviceCentral");
 
                         // Enregistrement de la référence sur le service central
                         try {

@@ -7,5 +7,5 @@ import java.rmi.RemoteException;
 
 public interface ServiceEnsSup extends Remote {
 
-    public JSONObject getEtablissements() throws RemoteException;
+    public String getEtablissements() throws RemoteException;
 }
