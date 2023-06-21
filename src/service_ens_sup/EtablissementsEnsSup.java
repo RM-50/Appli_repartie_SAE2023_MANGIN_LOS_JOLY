@@ -29,17 +29,8 @@ public class EtablissementsEnsSup implements ServiceEnsSup{
             response = client.send(request, HttpResponse.BodyHandlers.ofString());
             etablissements.put("code", response.statusCode());
             etablissements.put("content-type", response.headers().allValues("content-type"));
-            JSONArray etablissementsTous = new JSONArray(response.body());
-            JSONArray etablissementsNancy = new JSONArray();
-                for (int i = 0; i < etablissementsTous.length(); i++) {
-                    JSONObject etablissement = etablissementsTous.getJSONObject(i);
-                    try {
-                        if (etablissement.getJSONObject("fields").getString("com_nom").equals("Nancy")) {
-                            etablissementsNancy.put(etablissement);
-                        }
-                    }catch (JSONException e){}
-                }
-            etablissements.put("etablissements",etablissementsNancy);
+            JSONArray etablissementsEnsSup = new JSONArray(response.body());
+            etablissements.put("etablissements",etablissementsEnsSup);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             System.out.println("Erreur lors de l'envoi de la requête HTTP ou de la reception de sa réponse");
