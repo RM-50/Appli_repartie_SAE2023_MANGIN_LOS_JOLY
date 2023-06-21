@@ -51,7 +51,7 @@ class ProxyHandler implements HttpHandler {
                 String nom = parametres[0].substring(parametres[0].indexOf('=') + 1);
                 String prenom = parametres[1].substring(parametres[1].indexOf('=') + 1);
                 String nbConvives = parametres[2].substring(parametres[2].indexOf('=') + 1);
-                String resto = parametres[3].substring(parametres[3].indexOf('=') + 1);
+                String resto = parametres[3].substring(parametres[3].indexOf('=') + 1).replaceAll("'+'", " ");
                 String numTel = parametres[4].substring(parametres[4].indexOf('=') + 1);
                 ServiceRestaurant serviceRestaurant = proxy.getServiceRestaurant();
                 try {
