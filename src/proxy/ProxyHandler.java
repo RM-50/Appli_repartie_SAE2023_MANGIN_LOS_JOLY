@@ -44,6 +44,7 @@ class ProxyHandler implements HttpHandler {
         }
         // On définit le content-type
         exchange.getResponseHeaders().set("Content-Type", "application/json; charset=utf-8");
+        exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*/*");
 
         OutputStream responseBody = null;
         // On vérifie que la réponse existe
