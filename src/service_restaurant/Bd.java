@@ -9,7 +9,7 @@ public class Bd {
     public static ResultSet getCoordonnees(String login, String pwd) throws SQLException {
         Connection connection = ConnectionBd.getInstance(login, pwd);
         java.sql.Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT nom_resto, coordonnees_resto FROM RESTAURANT");
+        ResultSet resultSet = statement.executeQuery("SELECT nom_resto, coordonnees_resto, adresse_resto FROM RESTAURANT");
         return resultSet;
     }
 

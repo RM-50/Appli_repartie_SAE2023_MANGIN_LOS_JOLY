@@ -30,6 +30,7 @@ public class Restaurant implements ServiceRestaurant{
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("nom_resto", coordonnes.getString("nom_resto"));
                 jsonObject.put("coordonnees_resto", coordonnes.getString("coordonnees_resto"));
+                jsonObject.put("adresse_resto", coordonnes.getString("adresse_resto"));
                 jsonArray.put(jsonObject);
             }
             return jsonArray.toString(2);
