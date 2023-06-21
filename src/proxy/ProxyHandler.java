@@ -45,7 +45,7 @@ class ProxyHandler implements HttpHandler {
             String query = requestedUrl.getQuery();
             String[] parametres = query.split("&");
             if (parametres.length < 5){
-                responseData = "{\n  \"code\": 500\n  \"msg\": \"Erreur lors de la réservation : il manque des renseignements\"".getBytes();
+                responseData = "{\n  \"code\": 500\n  \"msg\": \"Erreur lors de la réservation : il manque des renseignements\"\n}".getBytes();
             }
             else {
                 String nom = parametres[0].substring(parametres[0].indexOf('=') + 1);
@@ -59,7 +59,7 @@ class ProxyHandler implements HttpHandler {
                     if (!reserve) {
                         responseData = "{\n  \"code\": 500\n  \"msg\": \"Erreur lors de la réservation\"\n}".getBytes();
                     }else {
-                        responseData = "{\n  \"code\": 200\n  \"msg\": \"Reservation effectuee\"\n}}".getBytes();
+                        responseData = "{\n  \"code\": 200\n  \"msg\": \"Reservation effectuee\"\n}".getBytes();
                     }
                 } catch (RemoteException | NullPointerException e) {
                     proxy.supprimerServiceRestaurant();
