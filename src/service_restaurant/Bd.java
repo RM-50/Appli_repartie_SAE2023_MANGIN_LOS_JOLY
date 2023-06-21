@@ -21,11 +21,17 @@ public class Bd {
             statement.executeUpdate("INSERT INTO CLIENT VALUES (client_seq.nextval, '" + nom + "', '" + prenom + "', '" + tel + "')");
         }
         resultSet = statement.executeQuery("SELECT id_client FROM CLIENT WHERE nom = '" + nom + "' AND prenom = '" + prenom + "'");
-        resultSet.next();
-        int id_client = resultSet.getInt("id_client");
+        int id_client = -1;
+        if (resultSet.next())
+            id_client = resultSet.getInt("id_client");
+        else
+            throw new SQLException("Le client n'existe pas");
         resultSet = statement.executeQuery("SELECT id_resto FROM RESTAURANT WHERE nom_resto = '" + resto + "'");
-        resultSet.next();
-        int id_resto = resultSet.getInt("id_resto");
+        int id_resto = -1;
+        if (resultSet.next())
+            id_resto = resultSet.getInt("id_resto");
+        else
+            throw new SQLException("Le restaurant n'existe pas");
         resultSet = statement.executeQuery("SELECT num_table FROM TABL WHERE id_resto = " + id_resto + " AND num_table NOT IN (SELECT num_table FROM RESERVATION WHERE id_resto = " + id_resto + ")");
         if (resultSet.next()) {
             int num_table = resultSet.getInt("num_table");
