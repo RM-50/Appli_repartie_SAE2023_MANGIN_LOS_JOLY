@@ -45,35 +45,35 @@ class ProxyHandler implements HttpHandler {
             String query = requestedUrl.getQuery();
             String[] parametres = query.split("&");
             if (parametres.length < 5){
-                responseData = "{\n  \"code\": 500,\n  \"msg\": \"Erreur lors de la réservation : il manque des renseignements\"\n}".getBytes();
+                responseData = "{\n  \"code\": 500\n  \"msg\": \"Erreur lors de la réservation : il manque des renseignements\"\n}".getBytes();
             }
             else {
                 String nom = parametres[0].substring(parametres[0].indexOf('=') + 1);
                 String prenom = parametres[1].substring(parametres[1].indexOf('=') + 1);
                 String nbConvives = parametres[2].substring(parametres[2].indexOf('=') + 1);
-                String resto = parametres[3].substring(parametres[3].indexOf('=') + 1).replaceAll("\\+", " ");
-                System.out.println(resto);
+                String resto = parametres[3].substring(parametres[3].indexOf('=') + 1).replaceAll("'+'", " ");
                 String numTel = parametres[4].substring(parametres[4].indexOf('=') + 1);
                 ServiceRestaurant serviceRestaurant = proxy.getServiceRestaurant();
                 try {
                     boolean reserve = serviceRestaurant.reserverTable(nom, prenom, Integer.parseInt(nbConvives), resto, numTel);
                     if (!reserve) {
-                        responseData = "{\n  \"code\": 500,\n  \"msg\": \"Erreur lors de la réservation\"\n}".getBytes();
+                        responseData = "{\n  \"code\": 500\n  \"msg\": \"Erreur lors de la réservation\"\n}".getBytes();
                     }else {
-                        responseData = "{\n  \"code\": 200,\n  \"msg\": \"Reservation effectuee\"\n}".getBytes();
+                        responseData = "{\n  \"code\": 200\n  \"msg\": \"Reservation effectuee\"\n}".getBytes();
                     }
                 } catch (RemoteException | NullPointerException e) {
                     proxy.supprimerServiceRestaurant();
                     e.printStackTrace();
                     System.out.println("Erreur lors de la reservation");
                 } catch (NumberFormatException e) {
-                    responseData = "{\n  \"code\": 500,\n  \"msg\": \"Erreur lors de la réservation : le nombre de convives doit être entier\"\n}".getBytes();
+                    responseData = "{\n  \"code\": 500\n  \"msg\": \"Erreur lors de la réservation : le nombre de convives doit être entier\"\n}".getBytes();
                 }
             }
         }
         // On définit le content-type
         exchange.getResponseHeaders().set("Content-Type", "application/json; charset=utf-8");
-        exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*/*");
+        exchange.getResponseHeaders().set("mode", "cors");
+        exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
 
         OutputStream responseBody = null;
         // On vérifie que la réponse existe
@@ -88,7 +88,7 @@ class ProxyHandler implements HttpHandler {
             responseBody.write(responseData);
         }
         else {
-            byte[] erreur = "{\n  \"code\": 500,\n  \"msg\": \"Le serveur a rencontré un problème\",\n  \"content-type\": \"application/json; charset=utf-8\"\n}".getBytes(StandardCharsets.UTF_8);
+            byte[] erreur = "{\n  \"code\": 500\n  \"msg\": \"Le serveur a rencontré un problème\"\n  \"content-type\": \"application/json; charset=utf-8\"\n}".getBytes(StandardCharsets.UTF_8);
             // Envoyer les Headers de la reponse
             exchange.sendResponseHeaders(500, erreur.length);
 

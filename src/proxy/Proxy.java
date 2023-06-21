@@ -103,37 +103,53 @@ public class Proxy implements ServiceProxy {
         });
         // Lancement du serveur
         server.start();
+        System.out.println("Serveur HTTPS lancé");
     }
 
     @Override
     public void enregistrerServiceRestaurant(ServiceRestaurant s) throws RemoteException {
-        if (this.serviceRestaurant == null)
+        if (this.serviceRestaurant == null){
             this.serviceRestaurant = s;
+            System.out.println("ServiceRestaurant enregistré");
+        }
+        else {
+            System.out.println("ServiceRestaurant déja existant");
+        }
     }
 
     @Override
     public void enregistrerServiceEnsSup(ServiceEnsSup s) throws RemoteException {
-        if (this.serviceEnsSup == null)
+        if (this.serviceEnsSup == null){
             this.serviceEnsSup = s;
+            System.out.println("ServiceEnsSup enregistré");
+        }
+        else {
+            System.out.println("ServiceEnsSup déja existant");
+        }
+
     }
 
     @Override
     public ServiceRestaurant getServiceRestaurant() throws RemoteException {
+        System.out.println("envoi de ServiceRestaurant");
         return this.serviceRestaurant;
     }
 
     @Override
     public ServiceEnsSup getServiceEnsSup() throws RemoteException {
+        System.out.println("envoi de ServiceEnsSup");
         return this.serviceEnsSup;
     }
 
     @Override
     public void supprimerServiceRestaurant() throws RemoteException {
         this.serviceRestaurant = null;
+        System.out.println("Suppression de ServiceRestauratnt");
     }
 
     @Override
     public void supprimerServiceEnsSup() throws RemoteException {
         this.serviceEnsSup = null;
+        System.out.println("Suppresion de ServiceEnsSup");
     }
 }
