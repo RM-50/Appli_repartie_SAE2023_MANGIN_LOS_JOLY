@@ -27,15 +27,11 @@ public class Bd {
         resultSet.next();
         int id_resto = resultSet.getInt("id_resto");
         resultSet = statement.executeQuery("SELECT num_table FROM TABL WHERE id_resto = " + id_resto + " AND num_table NOT IN (SELECT num_table FROM RESERVATION WHERE id_resto = " + id_resto + ")");
-        if (!resultSet.next()) {
-            throw new SQLException("Il n'y a plus de table disponible dans ce restaurant");
-        }else {
-            resultSet.next();
+        if (resultSet.next()) {
             int num_table = resultSet.getInt("num_table");
-            statement.executeUpdate("INSERT INTO RESERVATION VALUES (reservation_seq.nextval, " + id_client + ", " + id_resto + ", " + num_table + ", " + nb_convives + ")");
+            statement.executeUpdate("INSERT INTO RESERVATION VALUES (" + id_resto + ", " + num_table + ", " + "to_date('01/01/2001', 'dd/mm/yyyy'), " + nb_convives + ", "+ id_client + ")");
+        }else {
+            throw new SQLException("Il n'y a plus de table disponible dans ce restaurant");
         }
-
-
-
     }
 }

@@ -47,6 +47,7 @@ public class Restaurant implements ServiceRestaurant{
             Bd.reserver(nom, prenom, nbConvives, numTel, resto, login, password);
             return true;
         }catch (SQLException e){
+            e.printStackTrace();
             return false;
         }
     }
