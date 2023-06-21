@@ -57,16 +57,16 @@ class ProxyHandler implements HttpHandler {
                 try {
                     boolean reserve = serviceRestaurant.reserverTable(nom, prenom, Integer.parseInt(nbConvives), resto, numTel);
                     if (!reserve) {
-                        responseData = "{\n  \"code\": 500\n  \"msg\": \"Erreur lors de la réservation\"".getBytes();
+                        responseData = "{\n  \"code\": 500\n  \"msg\": \"Erreur lors de la réservation\"\n}".getBytes();
                     }else {
-                        responseData = "{\n  \"code\": 200\n  \"msg\": \"Reservation effectuee\"".getBytes();
+                        responseData = "{\n  \"code\": 200\n  \"msg\": \"Reservation effectuee\"\n}}".getBytes();
                     }
                 } catch (RemoteException | NullPointerException e) {
                     proxy.supprimerServiceRestaurant();
                     e.printStackTrace();
                     System.out.println("Erreur lors de la reservation");
                 } catch (NumberFormatException e) {
-                    responseData = "{\n  \"code\": 500\n  \"msg\": \"Erreur lors de la réservation : le nombre de convives doit être entier\"".getBytes();
+                    responseData = "{\n  \"code\": 500\n  \"msg\": \"Erreur lors de la réservation : le nombre de convives doit être entier\"\n}".getBytes();
                 }
             }
         }
